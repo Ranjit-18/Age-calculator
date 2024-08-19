@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+    <style>
+        .container{
+            text-align: center;
+            background-color: rgb(236, 15, 15);
+            width: 380px;
+            height: 230px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+                <h1>Calculate Your Age</h1>
+                
+                <!-- Form for user to input birthdate -->
+                <label for="birthdate">Enter your birthdate:</label><br><br>
+                <input type="date" id="birthdate"><br><br>
+                <button onclick="showAge()" style="">Calculate Age</button><br><br>
+
+                <!-- Div to display the result -->
+                <div id="result" style="background-color: aqua;width: 75%; justify-items:center; center;"></div>
+    </div>
+    <script>
+            function calculateAge(birthDate) {
+            // Convert the input string to a Date object
+            let birth = new Date(birthDate);
+            
+            // Get today's date
+            let today = new Date();
+            
+            // Calculate the difference in years
+            let years = today.getFullYear() - birth.getFullYear();
+            
+            // Calculate the difference in months
+            let months = today.getMonth() - birth.getMonth();
+            
+            // Calculate the difference in days
+            let days = today.getDate() - birth.getDate();
+            
+            // Adjust if the birthday hasn't occurred yet this month
+            if (days < 0) {
+                months--;
+                let lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);  // Last day of the previous month
+                days += lastMonth.getDate();
+            }
+            
+            // Adjust if the birthday hasn't occurred yet this year
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            
+            return { years, months, days };
+        }
+
+       // Function to show the age
+       function showAge() {
+            let birthdateInput = document.getElementById('birthdate').value;
+            if (birthdateInput) {
+                let age = calculateAge(birthdateInput);
+                document.getElementById('result').innerHTML = `You are ${age.years} years, ${age.months} months, and ${age.days} days old.`;
+            } else {
+                alert("Please enter a valid date.");
+            }
+        }
+
+        // Add event listener to button
+        document.getElementById('calculateBtn').addEventListener('click', showAge);
+        console.log(`Age: ${age.years} years, ${age.months} months, and ${age.days} days.`);
+    </script>
+</body>
+</html>
